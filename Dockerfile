@@ -11,7 +11,10 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements first for better caching
-COPY requirements.txt .\n\n# Install Python dependencies\nRUN pip install --no-cache-dir -r requirements.txt
+COPY requirments.txt .
+
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirments.txt
 
 # Copy the backend directory
 COPY . .
@@ -19,7 +22,6 @@ COPY . .
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
 ENV DEBUG=False
-ENV DATABASE_URL="postgresql://postgres:nHxOKjreYAEHzhgwJimFhQiIZiclJJtg@postgres.railway.internal:5432/railway"
 
 # Expose port
 EXPOSE 8000
