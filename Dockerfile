@@ -26,6 +26,10 @@ ENV DEBUG=False
 # Expose port
 EXPOSE 8000
 
-# Run migrations and start gunicorn
-CMD python manage.py migrate && gunicorn core.wsgi:application --bind 0.0.0.0:$PORT --workers 2
+# Run migrations during build
+RUN python manage.py migrate || true
+RUN python manage.py collectstatic --noinput || true
+
+# Start gunicorn - use sh -c to enable environment variable expansion
+CMD sh -c "gunicorn core.wsgi:application --bind 0.0.0.0:${PORT:-8000} --workers 2"
 
