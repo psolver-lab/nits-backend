@@ -5,7 +5,7 @@ pip install -r requirments.txt
 
 python manage.py collectstatic --noinput
 
+python manage.py createsuperuser --no-input || true
 python manage.py makemigrations app
 python manage.py migrate
-
 
